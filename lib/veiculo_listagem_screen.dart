@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/veiculo.dart';
+import 'package:myapp/veiculo_adicionar_screen.dart';
 
 class VeiculoListagemScreen extends StatefulWidget {
   const VeiculoListagemScreen({super.key});
@@ -9,28 +10,7 @@ class VeiculoListagemScreen extends StatefulWidget {
 }
 
 class _VeiculoListagemScreenState extends State<VeiculoListagemScreen> {
-  List<Veiculo> veiculos = [
-    Veiculo(marca: "Toyota", modelo: "Corolla", ano: 2022),
-    Veiculo(marca: "Honda", modelo: "Civic", ano: 2022),
-    Veiculo(marca: "Subaru", modelo: "Impreza", ano: 2021),
-    Veiculo(marca: "Ford", modelo: "Focus", ano: 2022),
-    Veiculo(marca: "Chevrolet", modelo: "Camaro", ano: 2021),
-    Veiculo(marca: "Nissan", modelo: "Sentra", ano: 2022),
-    Veiculo(marca: "Hyundai", modelo: "Elantra", ano: 2021),
-    Veiculo(marca: "Kia", modelo: "Sportage", ano: 2022),
-    Veiculo(marca: "1Mazda", modelo: "CX-5", ano: 2021),
-    Veiculo(marca: "Volkswagen", modelo: "Golf", ano: 2022),
-    Veiculo(marca: "1Toyota", modelo: "Corolla", ano: 2022),
-    Veiculo(marca: "1Honda", modelo: "Civic", ano: 2022),
-    Veiculo(marca: "1Subaru", modelo: "Impreza", ano: 2021),
-    Veiculo(marca: "1Ford", modelo: "Focus", ano: 2022),
-    Veiculo(marca: "1Chevrolet", modelo: "Camaro", ano: 2021),
-    Veiculo(marca: "1Nissan", modelo: "Sentra", ano: 2022),
-    Veiculo(marca: "1Hyundai", modelo: "Elantra", ano: 2021),
-    Veiculo(marca: "1Kia", modelo: "Sportage", ano: 2022),
-    Veiculo(marca: "1Mazda", modelo: "CX-5", ano: 2021),
-    Veiculo(marca: "1Volkswagen", modelo: "Golf", ano: 2022),
-  ];
+  List<Veiculo> veiculos = [];
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +25,24 @@ class _VeiculoListagemScreenState extends State<VeiculoListagemScreen> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(onPressed: () {}, child: Icon(Icons.add)),
+          FloatingActionButton(
+            heroTag: "veiculo.add",
+            onPressed: () async {
+              Veiculo resultado = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VeiculoAdicionarScreen(),
+                ),
+              );
+
+              if (resultado != null) {
+                setState(() {
+                  veiculos.add(resultado);
+                });
+              }
+            },
+            child: Icon(Icons.add),
+          ),
         ],
       ),
       body: SingleChildScrollView(
