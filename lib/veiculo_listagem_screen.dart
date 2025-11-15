@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:myapp/veiculo.dart';
 import 'package:myapp/veiculo_adicionar_screen.dart';
+import 'package:myapp/veiculo_repository.dart';
 
 class VeiculoListagemScreen extends StatefulWidget {
   const VeiculoListagemScreen({super.key});
@@ -11,9 +14,18 @@ class VeiculoListagemScreen extends StatefulWidget {
 
 class _VeiculoListagemScreenState extends State<VeiculoListagemScreen> {
   List<Veiculo> veiculos = [];
+  VeiculoRepository repository = VeiculoRepository();
 
   @override
   Widget build(BuildContext context) {
+    log("passou por aqui!");
+
+    repository.listarVeiculos().then((veiculos) {
+      setState(() {
+        this.veiculos = veiculos;
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
